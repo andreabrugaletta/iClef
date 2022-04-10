@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E1A6C0F28033AE3003FCE11 /* ClefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1A6C0E28033AE3003FCE11 /* ClefView.swift */; };
+		5E1A6C1128033EDD003FCE11 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1A6C1028033EDD003FCE11 /* NoteView.swift */; };
 		5E3EA07E27F843C900DF0E47 /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3EA07D27F843C900DF0E47 /* StaffView.swift */; };
 		5E50A74527F704FD0065A643 /* iClefApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E50A74427F704FD0065A643 /* iClefApp.swift */; };
 		5E50A74727F704FD0065A643 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E50A74627F704FD0065A643 /* ContentView.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E1A6C0E28033AE3003FCE11 /* ClefView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClefView.swift; sourceTree = "<group>"; };
+		5E1A6C1028033EDD003FCE11 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		5E3EA07D27F843C900DF0E47 /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
 		5E50A74127F704FD0065A643 /* iClef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iClef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E50A74427F704FD0065A643 /* iClefApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iClefApp.swift; sourceTree = "<group>"; };
@@ -40,6 +44,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E1A6C0D28033A3A003FCE11 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5E3EA07D27F843C900DF0E47 /* StaffView.swift */,
+				5E1A6C1028033EDD003FCE11 /* NoteView.swift */,
+				5E1A6C0E28033AE3003FCE11 /* ClefView.swift */,
+				5E50A74627F704FD0065A643 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		5E50A73827F704FD0065A643 = {
 			isa = PBXGroup;
 			children = (
@@ -59,10 +74,9 @@
 		5E50A74327F704FD0065A643 /* iClef */ = {
 			isa = PBXGroup;
 			children = (
+				5E1A6C0D28033A3A003FCE11 /* Views */,
 				5EB6258D27FD89DF00600EB9 /* Model */,
 				5E50A74427F704FD0065A643 /* iClefApp.swift */,
-				5E3EA07D27F843C900DF0E47 /* StaffView.swift */,
-				5E50A74627F704FD0065A643 /* ContentView.swift */,
 				5E50A74827F704FE0065A643 /* Assets.xcassets */,
 				5E50A74A27F704FE0065A643 /* Preview Content */,
 			);
@@ -159,10 +173,12 @@
 			files = (
 				5EE9BBA727FF287B004CECF3 /* Note.swift in Sources */,
 				5E50A74727F704FD0065A643 /* ContentView.swift in Sources */,
+				5E1A6C1128033EDD003FCE11 /* NoteView.swift in Sources */,
 				5E3EA07E27F843C900DF0E47 /* StaffView.swift in Sources */,
 				5E50A74527F704FD0065A643 /* iClefApp.swift in Sources */,
 				5EE9BBA927FF33E7004CECF3 /* ClefName.swift in Sources */,
 				5EB6258F27FD8A4700600EB9 /* Clef.swift in Sources */,
+				5E1A6C0F28033AE3003FCE11 /* ClefView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
