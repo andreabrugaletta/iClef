@@ -8,8 +8,8 @@
 import Foundation
 
 struct Clef {
-
-    let name : ClefName
+    
+    var name : ClefName
     let assetName : String
     let xOffset : Double
     let yOffset : Double
@@ -56,5 +56,9 @@ struct Clef {
                 yOffset = 2.114
                 frameHeight = 1.0114
         }
+    }
+    
+    func getRandomClef() -> ClefName {
+        return ClefName.allCases.randomElement() ?? .treble
     }
 }

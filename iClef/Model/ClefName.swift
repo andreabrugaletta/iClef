@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ClefName {
+enum ClefName : CaseIterable {
     case treble
     case bass
     case baritone
