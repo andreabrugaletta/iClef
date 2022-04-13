@@ -10,7 +10,8 @@ import SwiftUI
 struct StaffView: View {    
     @State var randomNote : String = "C4"
     @State var randomClef : ClefName = .treble
-        
+    @State var notePressed : String = "none"
+    
     @State var isTimerRunning = true
     @State var isPlayerRight = false
     @State var score =  0
@@ -21,7 +22,6 @@ struct StaffView: View {
     
     let notes = ["C", "C#/Db", "D", "D#/Eb", "E", "F","F#/Gb", "G","G#/Ab", "A", "A#/Bb", "B"]
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
-    
     
     /*
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -79,7 +79,6 @@ struct StaffView: View {
                         }
                     }
                 }
-            .padding()
             .frame(width: 350, height: 130, alignment: .leading)
             .onReceive(timer) { _ in
                 randomClef = clef.getRandomClef()
@@ -111,27 +110,21 @@ struct StaffView: View {
             }
              */
             
-            
-            
-            
-            
-            
-            
-            
-        
+    //button keyboard
+    /*
             HStack {
                 ForEach(notes, id: \.self) { note in
                     Button {
-//                        if randomNote.contains(note) {
-//                            pickRandomNote()
-//                            score += 1
-//                            isPlayerRight = true
-//                        } else {
-//                            errors += 1
-//                            if errors >= 3 {
-//                                gameOver()
-//                            }
-//                        }
+                        if randomNote.contains(note) {
+                            pickRandomNote()
+                            score += 1
+                            isPlayerRight = true
+                        } else {
+                            errors += 1
+                            if errors >= 3 {
+                                gameOver()
+                            }
+                        }
                     } label: {
                         Text("\(note)")
                     }
@@ -139,7 +132,16 @@ struct StaffView: View {
                 }
             }
             .padding(60)
-                        
+     */
+            
+            Text("note pressed: \(notePressed)")
+            
+            KeyView(notePressed: $notePressed)
+                .frame(height: 250)
+                .padding(.horizontal, 24)
+            
+            Spacer()
+            
             VStack {
                 Text("Score: \(score)")
                 Text("Errors: \(errors)")
@@ -154,6 +156,7 @@ struct StaffView: View {
             Spacer()
         }
         .padding(.top, 44)
+        
     }
 }
 

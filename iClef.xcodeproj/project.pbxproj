@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5E3EA07E27F843C900DF0E47 /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3EA07D27F843C900DF0E47 /* StaffView.swift */; };
+		5E49903A2806FA3F00D13C2C /* KeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4990392806FA3F00D13C2C /* KeyView.swift */; };
+		5E49903D2806FA9C00D13C2C /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5E49903C2806FA9C00D13C2C /* AudioKit */; };
+		5E4990402806FBB600D13C2C /* AudioKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5E49903F2806FBB600D13C2C /* AudioKitUI */; };
 		5E50A74527F704FD0065A643 /* iClefApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E50A74427F704FD0065A643 /* iClefApp.swift */; };
 		5E50A74727F704FD0065A643 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E50A74627F704FD0065A643 /* ContentView.swift */; };
 		5E50A74927F704FE0065A643 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E50A74827F704FE0065A643 /* Assets.xcassets */; };
@@ -19,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		5E3EA07D27F843C900DF0E47 /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
+		5E4990392806FA3F00D13C2C /* KeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyView.swift; sourceTree = "<group>"; };
 		5E50A74127F704FD0065A643 /* iClef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iClef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E50A74427F704FD0065A643 /* iClefApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iClefApp.swift; sourceTree = "<group>"; };
 		5E50A74627F704FD0065A643 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,6 +38,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E4990402806FBB600D13C2C /* AudioKitUI in Frameworks */,
+				5E49903D2806FA9C00D13C2C /* AudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +51,7 @@
 			children = (
 				5E3EA07D27F843C900DF0E47 /* StaffView.swift */,
 				5E50A74627F704FD0065A643 /* ContentView.swift */,
+				5E4990392806FA3F00D13C2C /* KeyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -111,6 +118,10 @@
 			dependencies = (
 			);
 			name = iClef;
+			packageProductDependencies = (
+				5E49903C2806FA9C00D13C2C /* AudioKit */,
+				5E49903F2806FBB600D13C2C /* AudioKitUI */,
+			);
 			productName = iClef;
 			productReference = 5E50A74127F704FD0065A643 /* iClef.app */;
 			productType = "com.apple.product-type.application";
@@ -139,6 +150,10 @@
 				Base,
 			);
 			mainGroup = 5E50A73827F704FD0065A643;
+			packageReferences = (
+				5E49903B2806FA9B00D13C2C /* XCRemoteSwiftPackageReference "AudioKit" */,
+				5E49903E2806FBB600D13C2C /* XCRemoteSwiftPackageReference "AudioKitUI" */,
+			);
 			productRefGroup = 5E50A74227F704FD0065A643 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -167,6 +182,7 @@
 			files = (
 				5EE9BBA727FF287B004CECF3 /* Note.swift in Sources */,
 				5E50A74727F704FD0065A643 /* ContentView.swift in Sources */,
+				5E49903A2806FA3F00D13C2C /* KeyView.swift in Sources */,
 				5E3EA07E27F843C900DF0E47 /* StaffView.swift in Sources */,
 				5E50A74527F704FD0065A643 /* iClefApp.swift in Sources */,
 				5EE9BBA927FF33E7004CECF3 /* ClefName.swift in Sources */,
@@ -181,6 +197,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -214,6 +231,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -286,6 +304,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -374,6 +393,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5E49903B2806FA9B00D13C2C /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		5E49903E2806FBB600D13C2C /* XCRemoteSwiftPackageReference "AudioKitUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKitUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5E49903C2806FA9C00D13C2C /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5E49903B2806FA9B00D13C2C /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+		5E49903F2806FBB600D13C2C /* AudioKitUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5E49903E2806FBB600D13C2C /* XCRemoteSwiftPackageReference "AudioKitUI" */;
+			productName = AudioKitUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5E50A73927F704FD0065A643 /* Project object */;
 }
