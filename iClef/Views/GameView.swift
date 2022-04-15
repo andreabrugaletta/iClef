@@ -7,35 +7,76 @@
 
 import SwiftUI
 
-struct StaffView: View {    
+struct GameView: View {
+    
+    private let GAME_TIME = 5 //seconds
+    private let MAX_ERRORS = 5
+    
     @State var randomNote : String = "C4"
     @State var randomClef : ClefName = .treble
     @State var notePressed : String = "none"
-    
-    @State var isTimerRunning = true
-    @State var isPlayerRight = false
     @State var score =  0
     @State var errors = 0
-    @State var count = 0
     @State var isGameOver = false
-    @State var isButtonDisabled = false
-    
-    let notes = ["C", "C#/Db", "D", "D#/Eb", "E", "F","F#/Gb", "G","G#/Ab", "A", "A#/Bb", "B"]
-    let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
-    
-    /*
+    @State var secondsPassed = 0
+    @State var hasPlayerAnswered = false
+
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    private func gameOver() {
-        isTimerRunning.toggle()
-        isGameOver.toggle()
-        isButtonDisabled.toggle()
+    
+    private func startGame(_ note : Note, _ clef : Clef) {
+        print("start game")
+        pickRandomClefAndNote(note, clef)
     }
-    private func pickRandomNote() {
-        let index = Int(arc4random_uniform(UInt32(note.yOffsetsByClef.count)))
-        let randomValue = Array(note.yOffsetsByClef.keys)[index]
-        randomNote = randomValue
+    
+    private func pickRandomClefAndNote(_ note: Note, _ clef : Clef) {
+        randomClef = clef.getRandomLvl2Clef()
+        print(randomClef)
+        randomNote = note.getRandomNote(in: randomClef)
     }
-    */
+    
+    private func restartTimer() {
+        secondsPassed = 0
+        hasPlayerAnswered = false
+    }
+    
+    private func didTimerExpired(note: Note, clef: Clef) {
+        
+        if hasPlayerAnswered {
+            restartTimer()
+        }
+        
+        secondsPassed += 1
+        if (secondsPassed > GAME_TIME) {
+            errors += 1
+            checkGameOver()
+            pickRandomClefAndNote(note, clef)
+            secondsPassed = 1
+        }
+        print(secondsPassed)
+        
+    }
+        
+    private func checkCorrectAnswer(notePressed : String, note : Note, clef: Clef) {
+        
+        if randomNote.contains(notePressed) {
+            //correct
+            score += 1
+            hasPlayerAnswered = true
+        } else {
+            //wrong
+            errors += 1
+            checkGameOver()
+            
+        }
+        pickRandomClefAndNote(note, clef)
+    }
+    
+    private func checkGameOver() {
+        if errors >= MAX_ERRORS {
+            isGameOver = true
+        }
+    }
+    
     
     var body: some View {
         
@@ -80,67 +121,24 @@ struct StaffView: View {
                     }
                 }
             .frame(width: 350, height: 130, alignment: .leading)
-            .onReceive(timer) { _ in
-                randomClef = clef.getRandomClef()
-                randomNote = note.getRandomNote(in: randomClef)
+            .onAppear {
+                startGame(note, clef)
             }
-            
-            Text("note \(randomNote)")
-                .padding(.top, 40)
-            /*
             .onReceive(timer) { _ in
-                if isTimerRunning {
-                    if isPlayerRight {
-                        count = 1
-                        isPlayerRight = false
-                    } else {
-                        if count == SECONDS {
-                            errors += 1
-                            if errors >= 3 {
-                                gameOver()
-                            } else {
-                                pickRandomNote()
-                                count = 1
-                            }
-                        } else {
-                            count += 1
-                        }
-                    }
+                if !isGameOver {
+                    didTimerExpired(note: note, clef: clef)
                 }
             }
-             */
             
-    //button keyboard
-    /*
-            HStack {
-                ForEach(notes, id: \.self) { note in
-                    Button {
-                        if randomNote.contains(note) {
-                            pickRandomNote()
-                            score += 1
-                            isPlayerRight = true
-                        } else {
-                            errors += 1
-                            if errors >= 3 {
-                                gameOver()
-                            }
-                        }
-                    } label: {
-                        Text("\(note)")
-                    }
-                    .disabled(isButtonDisabled)
-                }
-            }
-            .padding(60)
-     */
-            
-            Text("note pressed: \(notePressed)")
-            
+//            Text("note \(randomNote)")
+//                .padding(.top, 40)
+           
             KeyView(notePressed: $notePressed)
-                .frame(height: 250)
-                .padding(.horizontal, 24)
-            
-            Spacer()
+                .padding()
+                .onChange(of: self.notePressed) { notePressed in
+                    print(notePressed)
+                    checkCorrectAnswer(notePressed: notePressed, note: note, clef: clef)
+                }
             
             VStack {
                 Text("Score: \(score)")
@@ -150,19 +148,20 @@ struct StaffView: View {
             
             if isGameOver {
                 Text("GAME OVER")
+                    .foregroundColor(.red)
+                    .fontWeight(.bold)
                     .padding()
             }
             
-            Spacer()
         }
         .padding(.top, 44)
         
     }
 }
 
-struct StaffView_Previews: PreviewProvider {
+struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        StaffView()
+        GameView()
             .previewDevice("iPhone 13 Pro Max")
             .previewInterfaceOrientation(.portrait)
     }

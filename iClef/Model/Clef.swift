@@ -61,4 +61,8 @@ struct Clef {
     func getRandomClef() -> ClefName {
         return ClefName.allCases.randomElement() ?? .treble
     }
+    
+    func getRandomLvl2Clef() -> ClefName {
+        return ClefName.allCases[0...1].randomElement() ?? .treble
+    }
 }
