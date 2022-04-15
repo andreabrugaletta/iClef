@@ -41,6 +41,10 @@ struct GameView: View {
     
     private func didTimerExpired(note: Note, clef: Clef) {
         
+        if secondsPassed == GAME_TIME {
+            pickRandomClefAndNote(note, clef)
+        }
+        
         if hasPlayerAnswered {
             restartTimer()
         }
@@ -49,7 +53,6 @@ struct GameView: View {
         if (secondsPassed > GAME_TIME) {
             errors += 1
             checkGameOver()
-            pickRandomClefAndNote(note, clef)
             secondsPassed = 1
         }
         print(secondsPassed)
