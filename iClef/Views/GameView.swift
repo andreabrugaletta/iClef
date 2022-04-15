@@ -61,16 +61,19 @@ struct GameView: View {
         
     private func checkCorrectAnswer(notePressed : String, note : Note, clef: Clef) {
         
-        if randomNote.contains(notePressed) {
+        if randomNote.first == notePressed.first {
             //correct
             score += 1
-            hasPlayerAnswered = true
         } else {
             //wrong
+            print("wrong")
             errors += 1
             checkGameOver()
             
         }
+        
+        hasPlayerAnswered = true
+        secondsPassed = 1
         pickRandomClefAndNote(note, clef)
     }
     
