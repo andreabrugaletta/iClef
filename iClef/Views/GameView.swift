@@ -12,7 +12,8 @@ struct GameView: View {
     private let GAME_TIME = 5 //seconds
     private let MAX_ERRORS = 5
     
-    @State var randomNote : String = "C4"
+    @State var randomNote : String = "A4"
+    @State var accidental : Accidental = .natural
     @State var randomClef : ClefName = .treble
     @State var notePressed : String = "none"
     @State var score =  0
@@ -32,6 +33,7 @@ struct GameView: View {
         randomClef = clef.getRandomLvl2Clef()
         print(randomClef)
         randomNote = note.getRandomNote(in: randomClef)
+        accidental = note.getRandomAccidental()
     }
     
     private func restartTimer() {
@@ -61,7 +63,7 @@ struct GameView: View {
         
     private func checkCorrectAnswer(notePressed : String, note : Note, clef: Clef) {
         
-        if randomNote.first == notePressed.first {
+        if notePressed.contains(randomNote.first!) {
             //correct
             score += 1
         } else {
@@ -69,7 +71,6 @@ struct GameView: View {
             print("wrong")
             errors += 1
             checkGameOver()
-            
         }
         
         hasPlayerAnswered = true
@@ -83,7 +84,6 @@ struct GameView: View {
         }
     }
     
-    
     var body: some View {
         
         let note = Note(name: randomNote, in: randomClef)
@@ -94,7 +94,7 @@ struct GameView: View {
             Image("staff")
                 .resizable()
                 .scaledToFit()
-                .opacity(0.8)
+                .opacity(0.6)
                 .overlay {
                     GeometryReader { geometry in
                         //clef
@@ -105,6 +105,21 @@ struct GameView: View {
                             .offset(x: geometry.frame(in: .local).origin.x + clef.xOffset,
                                     y: geometry.size.height / clef.yOffset)
                         //note
+                        //accidental
+                        if accidental == .sharp {
+                            Image("sharp")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: geometry.size.width / note.width, height: geometry.size.height / 2.0, alignment: .center)
+                                .offset(x: geometry.size.width / (note.xOffset * 1.3), y: (geometry.size.height / note.yOffset) - 9.2)
+                        } else if accidental == .flat {
+                            Image("flat")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: geometry.size.width / note.width, height: geometry.size.height / 2.2, alignment: .center)
+                                .offset(x: geometry.size.width / (note.xOffset * 1.32), y: (geometry.size.height / note.yOffset) - 17.5)
+                        }
+                        //note
                         Image(note.assetName)
                             .resizable()
                             .scaledToFit()
@@ -112,17 +127,17 @@ struct GameView: View {
                                    height: geometry.size.height / note.height,
                                    alignment: .center)
                             .offset(x: geometry.size.width / note.xOffset,
-                                    y: geometry.size.height / note.yOffset)
+                                y: geometry.size.height / note.yOffset)
                         // dash (for dashed notes)
                         if note.yOffset == 0.924 {
                             Rectangle()
                                 .frame(width: geometry.size.width / 8, height: 3.65)
-                                .offset(x: geometry.size.width / 2.5, y: geometry.size.height / 0.84)
+                                .offset(x: geometry.size.width / note.xOffset, y: geometry.size.height / 0.84)
                         }
                         if note.yOffset == -2.85 {
                             Rectangle()
                                 .frame(width: geometry.size.width / 8, height: 3.65)
-                                .offset(x: geometry.size.width / 2.5, y: geometry.size.height / -4.02)
+                                .offset(x: geometry.size.width / note.xOffset, y: geometry.size.height / -4.02)
                         }
                     }
                 }
@@ -136,9 +151,8 @@ struct GameView: View {
                 }
             }
             
-//            Text("note \(randomNote)")
-//                .padding(.top, 40)
-           
+            Text("random note: \(randomNote)")
+                       
             KeyView(notePressed: $notePressed)
                 .padding()
                 .onChange(of: self.notePressed) { notePressed in
@@ -168,7 +182,7 @@ struct GameView: View {
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         GameView()
-            .previewDevice("iPhone 13 Pro Max")
+            .previewDevice("iPhone 12")
             .previewInterfaceOrientation(.portrait)
     }
 }

@@ -26,7 +26,7 @@ struct Note {
     init(name: String, in clef: ClefName) {
         width = 8.0
         height = 3.8
-        xOffset = 2.5
+        xOffset = 2.65
         assetName = "note_head"
         self.clef = clef
         self.name = name
@@ -55,6 +55,10 @@ struct Note {
     func getRandomNote(in clef: ClefName) -> String {
         let index = Int(arc4random_uniform(UInt32(getOffsetsByClef(clef).count)))
         return Array(getOffsetsByClef(clef).keys)[index]
+    }
+    
+    func getRandomAccidental() -> Accidental {
+        return Accidental.allCases.randomElement() ?? .natural
     }
         
 }

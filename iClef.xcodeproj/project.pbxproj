@@ -19,6 +19,7 @@
 		5EB6258F27FD8A4700600EB9 /* Clef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB6258E27FD8A4700600EB9 /* Clef.swift */; };
 		5EE9BBA727FF287B004CECF3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9BBA627FF287B004CECF3 /* Note.swift */; };
 		5EE9BBA927FF33E7004CECF3 /* ClefName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9BBA827FF33E7004CECF3 /* ClefName.swift */; };
+		5EEF0E86280EFE2F00DABC42 /* Accidental.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF0E85280EFE2F00DABC42 /* Accidental.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		5EB6258E27FD8A4700600EB9 /* Clef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clef.swift; sourceTree = "<group>"; };
 		5EE9BBA627FF287B004CECF3 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		5EE9BBA827FF33E7004CECF3 /* ClefName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClefName.swift; sourceTree = "<group>"; };
+		5EEF0E85280EFE2F00DABC42 /* Accidental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accidental.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		5E50A74327F704FD0065A643 /* iClef */ = {
 			isa = PBXGroup;
 			children = (
+				5EEF0E84280EF6A000DABC42 /* Enums */,
 				5EAB72712809C3540014AEA9 /* Utils */,
 				5E1A6C0D28033A3A003FCE11 /* Views */,
 				5EB6258D27FD89DF00600EB9 /* Model */,
@@ -108,9 +111,17 @@
 			children = (
 				5EB6258E27FD8A4700600EB9 /* Clef.swift */,
 				5EE9BBA627FF287B004CECF3 /* Note.swift */,
-				5EE9BBA827FF33E7004CECF3 /* ClefName.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5EEF0E84280EF6A000DABC42 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				5EE9BBA827FF33E7004CECF3 /* ClefName.swift */,
+				5EEF0E85280EFE2F00DABC42 /* Accidental.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +210,7 @@
 				5E50A74527F704FD0065A643 /* iClefApp.swift in Sources */,
 				5EE9BBA927FF33E7004CECF3 /* ClefName.swift in Sources */,
 				5EB6258F27FD8A4700600EB9 /* Clef.swift in Sources */,
+				5EEF0E86280EFE2F00DABC42 /* Accidental.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
