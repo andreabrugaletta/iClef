@@ -14,7 +14,7 @@ struct KeyView: View {
     
     var body: some View {
         VStack {
-            Text("note pressed: \(notePressed)")
+//            Text("note pressed: \(notePressed)")
             Keyboard(notePressed: $notePressed)
         }
 

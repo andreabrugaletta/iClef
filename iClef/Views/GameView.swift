@@ -10,7 +10,8 @@ import SwiftUI
 struct GameView: View {
     
     private let GAME_TIME = 5 //seconds
-    private let MAX_ERRORS = 5
+    private let SUB = 0.001
+    private let MAX_ERRORS = 3
     
     @State var randomNote : String = "A4"
     @State var accidental : Accidental = .natural
@@ -21,8 +22,11 @@ struct GameView: View {
     @State var isGameOver = false
     @State var secondsPassed = 0
     @State var hasPlayerAnswered = false
+    @State var progressBarWidth : CGFloat = 300
+    @State var toSec = 0
 
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 0.001, on: .main, in: .common).autoconnect()
+    
     
     private func startGame(_ note : Note, _ clef : Clef) {
         print("start game")
@@ -40,24 +44,32 @@ struct GameView: View {
         secondsPassed = 0
         hasPlayerAnswered = false
     }
-    
+        
     private func didTimerExpired(note: Note, clef: Clef) {
         
-        if secondsPassed == GAME_TIME {
-            pickRandomClefAndNote(note, clef)
-        }
-        
+        let p : Double = 300.0 / (Double(GAME_TIME) / SUB)
+        progressBarWidth = progressBarWidth - CGFloat(p)
+
         if hasPlayerAnswered {
             restartTimer()
+            progressBarWidth = 300.0
         }
         
-        secondsPassed += 1
-        if (secondsPassed > GAME_TIME) {
+        toSec += 1
+        
+        if toSec == Int(1.0 / SUB) {
+            secondsPassed += 1
+            toSec = 0
+            print(secondsPassed)
+        }
+        
+        if (secondsPassed >= GAME_TIME) {
+            pickRandomClefAndNote(note, clef)
             errors += 1
             checkGameOver()
-            secondsPassed = 1
+            secondsPassed = 0
+            progressBarWidth = 300.0
         }
-        print(secondsPassed)
         
     }
         
@@ -150,8 +162,10 @@ struct GameView: View {
                     didTimerExpired(note: note, clef: clef)
                 }
             }
-            
-            Text("random note: \(randomNote)")
+                        
+            ProgressBar(progressWidth: $progressBarWidth)
+                .padding()
+                .padding(.top, 20)
                        
             KeyView(notePressed: $notePressed)
                 .padding()
