@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import AVFoundation
+
+var audioPlayer : AVAudioPlayer?
 
 struct GameView: View {
     
@@ -26,7 +29,6 @@ struct GameView: View {
     @State var toSec = 0
 
     let timer = Timer.publish(every: 0.001, on: .main, in: .common).autoconnect()
-    
     
     private func startGame(_ note : Note, _ clef : Clef) {
         print("start game")
@@ -64,6 +66,7 @@ struct GameView: View {
         }
         
         if (secondsPassed >= GAME_TIME) {
+            playSound("wrong")
             pickRandomClefAndNote(note, clef)
             errors += 1
             checkGameOver()
@@ -78,13 +81,13 @@ struct GameView: View {
         if notePressed.contains(randomNote.first!) {
             //correct
             score += 1
+            playSound("correct")
         } else {
             //wrong
-            print("wrong")
+            playSound("wrong")
             errors += 1
             checkGameOver()
         }
-        
         hasPlayerAnswered = true
         secondsPassed = 1
         pickRandomClefAndNote(note, clef)
@@ -190,6 +193,17 @@ struct GameView: View {
         }
         .padding(.top, 44)
         
+    }
+}
+
+private func playSound(_ resource : String) {
+    if let url = Bundle.main.url(forResource: resource, withExtension: "wav") {
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+        } catch {
+            print("ERROR PLAYING SOUND")
+        }
     }
 }
 
