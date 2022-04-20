@@ -9,14 +9,15 @@ import SwiftUI
 
 struct ProgressBar: View {
     @Binding var progressWidth : CGFloat
+    @Binding var progressBarBackgroundColor : Color
     
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 25, style: .continuous)
-                .fill(Color.gray)
+                .fill(Color.white)
                 .frame(width: 300, height: 5)
             RoundedRectangle(cornerRadius: 25, style: .continuous)
-                .fill(Color.green)
+                .fill(Color.gray)
                 .frame(width: progressWidth, height: 5)
         }
     }

@@ -27,8 +27,21 @@ struct GameView: View {
     @State var hasPlayerAnswered = false
     @State var progressBarWidth : CGFloat = 300
     @State var toSec = 0
+    @State var noteColor : Color = .black
 
     let timer = Timer.publish(every: 0.001, on: .main, in: .common).autoconnect()
+    
+    private func colorChange(wrongAnswer isWrong : Bool) {
+        if isWrong {
+            noteColor = .red
+        } else {
+            noteColor = .green
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+            noteColor = .black
+        }
+    }
     
     private func startGame(_ note : Note, _ clef : Clef) {
         print("start game")
@@ -67,6 +80,7 @@ struct GameView: View {
         
         if (secondsPassed >= GAME_TIME) {
             playSound("wrong")
+            colorChange(wrongAnswer: true)
             pickRandomClefAndNote(note, clef)
             errors += 1
             checkGameOver()
@@ -82,9 +96,11 @@ struct GameView: View {
             //correct
             score += 1
             playSound("correct")
+            colorChange(wrongAnswer: false)
         } else {
             //wrong
             playSound("wrong")
+            colorChange(wrongAnswer: true)
             errors += 1
             checkGameOver()
         }
@@ -124,12 +140,16 @@ struct GameView: View {
                         if accidental == .sharp {
                             Image("sharp")
                                 .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(noteColor)
                                 .scaledToFit()
                                 .frame(width: geometry.size.width / note.width, height: geometry.size.height / 2.0, alignment: .center)
                                 .offset(x: geometry.size.width / (note.xOffset * 1.3), y: (geometry.size.height / note.yOffset) - 9.2)
                         } else if accidental == .flat {
                             Image("flat")
                                 .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(noteColor)
                                 .scaledToFit()
                                 .frame(width: geometry.size.width / note.width, height: geometry.size.height / 2.2, alignment: .center)
                                 .offset(x: geometry.size.width / (note.xOffset * 1.32), y: (geometry.size.height / note.yOffset) - 17.5)
@@ -137,6 +157,8 @@ struct GameView: View {
                         //note
                         Image(note.assetName)
                             .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(noteColor)
                             .scaledToFit()
                             .frame(width: geometry.size.width / note.width,
                                    height: geometry.size.height / note.height,
@@ -146,11 +168,13 @@ struct GameView: View {
                         // dash (for dashed notes)
                         if note.yOffset == 0.924 {
                             Rectangle()
+                                .foregroundColor(noteColor)
                                 .frame(width: geometry.size.width / 8, height: 3.65)
                                 .offset(x: geometry.size.width / note.xOffset, y: geometry.size.height / 0.84)
                         }
                         if note.yOffset == -2.85 {
                             Rectangle()
+                                .foregroundColor(noteColor)
                                 .frame(width: geometry.size.width / 8, height: 3.65)
                                 .offset(x: geometry.size.width / note.xOffset, y: geometry.size.height / -4.02)
                         }
@@ -166,7 +190,8 @@ struct GameView: View {
                 }
             }
                         
-            ProgressBar(progressWidth: $progressBarWidth)
+            ProgressBar(progressWidth: $progressBarWidth,
+                        progressBarBackgroundColor: $noteColor)
                 .padding()
                 .padding(.top, 20)
                        
@@ -192,6 +217,8 @@ struct GameView: View {
             
         }
         .padding(.top, 44)
+//        .background(noteColor)
+        
         
     }
 }
@@ -202,15 +229,15 @@ private func playSound(_ resource : String) {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer?.play()
         } catch {
-            print("ERROR PLAYING SOUND")
+            print("Error playing sound")
         }
     }
 }
 
-struct GameView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameView()
-            .previewDevice("iPhone 12")
-            .previewInterfaceOrientation(.portrait)
-    }
-}
+//struct GameView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        GameView()
+//            .previewDevice("iPhone 12")
+//            .previewInterfaceOrientation(.portrait)
+//    }
+//}
