@@ -96,7 +96,6 @@ struct GameView: View {
     }
     
     private func createCorrectNoteFileName(_ noteName : String) -> String {
-        print("NOTE NAME: \(noteName)")
         var fileName = ""
         switch accidental {
             case .natural:
@@ -105,7 +104,7 @@ struct GameView: View {
                 if noteName.contains("F") {
                     fileName = "note E" + String(noteName[1])
                 } else if noteName.contains("C") {
-                    fileName = "note B" + String(noteName[1])
+                    fileName = "note B" + String(noteName[1].wholeNumberValue! - 1)
                 } else {
                     fileName = "note " + noteName + "b"
                 }
@@ -113,11 +112,12 @@ struct GameView: View {
                 if noteName.contains("E") {
                     fileName = "note F" + String(noteName[1])
                 } else if noteName.contains("B") {
-                    fileName = "note C" + String(noteName[1])
+                    fileName = "note C" + String(noteName[1].wholeNumberValue! + 1)
                 } else {
                     fileName = "note " + noteName + "#"
                 }
         }
+        print("NOTE NAME: \(fileName)")
         return fileName
     }
         
@@ -252,13 +252,11 @@ struct GameView: View {
             
         }
         .padding(.top, 44)
-//        .background(noteColor)
-        
-        
     }
 }
 
 private func playSound(_ resource : String) {
+    print("RESOURCE: \(resource)")
     if let url = Bundle.main.url(forResource: resource, withExtension: "mp3") {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
