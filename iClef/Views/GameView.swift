@@ -15,6 +15,7 @@ struct GameView: View {
     private let GAME_TIME = 5 //seconds
     private let SUB = 0.001
     private let MAX_ERRORS = 3
+    private let ANIMATION_TIME = 150
     
     @State var randomNote : String = "A4"
     @State var accidental : Accidental = .natural
@@ -38,7 +39,7 @@ struct GameView: View {
             noteColor = .green
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(ANIMATION_TIME)) {
             noteColor = .black
         }
     }
@@ -81,7 +82,11 @@ struct GameView: View {
         if (secondsPassed >= GAME_TIME) {
             playSound("wrong")
             colorChange(wrongAnswer: true)
-            pickRandomClefAndNote(note, clef)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(ANIMATION_TIME)) {
+                pickRandomClefAndNote(note, clef)
+            }
+            
             errors += 1
             checkGameOver()
             secondsPassed = 0
@@ -89,13 +94,40 @@ struct GameView: View {
         }
         
     }
+    
+    private func createCorrectNoteFileName(_ noteName : String) -> String {
+        print("NOTE NAME: \(noteName)")
+        var fileName = ""
+        switch accidental {
+            case .natural:
+                fileName = "note " + noteName
+            case .flat:
+                if noteName.contains("F") {
+                    fileName = "note E" + String(noteName[1])
+                } else if noteName.contains("C") {
+                    fileName = "note B" + String(noteName[1])
+                } else {
+                    fileName = "note " + noteName + "b"
+                }
+            case .sharp:
+                if noteName.contains("E") {
+                    fileName = "note F" + String(noteName[1])
+                } else if noteName.contains("B") {
+                    fileName = "note C" + String(noteName[1])
+                } else {
+                    fileName = "note " + noteName + "#"
+                }
+        }
+        return fileName
+    }
         
     private func checkCorrectAnswer(notePressed : String, note : Note, clef: Clef) {
         
         if notePressed.contains(randomNote.first!) {
             //correct
             score += 1
-            playSound("correct")
+            let fileName = createCorrectNoteFileName(randomNote)
+            playSound(fileName)
             colorChange(wrongAnswer: false)
         } else {
             //wrong
@@ -106,7 +138,10 @@ struct GameView: View {
         }
         hasPlayerAnswered = true
         secondsPassed = 1
-        pickRandomClefAndNote(note, clef)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(ANIMATION_TIME)) {
+            pickRandomClefAndNote(note, clef)
+        }
     }
     
     private func checkGameOver() {
@@ -224,7 +259,7 @@ struct GameView: View {
 }
 
 private func playSound(_ resource : String) {
-    if let url = Bundle.main.url(forResource: resource, withExtension: "wav") {
+    if let url = Bundle.main.url(forResource: resource, withExtension: "mp3") {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer?.play()
