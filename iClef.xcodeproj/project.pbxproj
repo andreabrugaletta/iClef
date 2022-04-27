@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E084B9D2819579B007495FF /* note E2b.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E084B9C2819579B007495FF /* note E2b.mp3 */; };
 		5E3EA07E27F843C900DF0E47 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3EA07D27F843C900DF0E47 /* GameView.swift */; };
 		5E49903A2806FA3F00D13C2C /* KeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4990392806FA3F00D13C2C /* KeyView.swift */; };
 		5E49903D2806FA9C00D13C2C /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5E49903C2806FA9C00D13C2C /* AudioKit */; };
@@ -87,6 +88,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E084B9C2819579B007495FF /* note E2b.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "note E2b.mp3"; path = "sounds/note E2b.mp3"; sourceTree = SOURCE_ROOT; };
 		5E3EA07D27F843C900DF0E47 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		5E4990392806FA3F00D13C2C /* KeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyView.swift; sourceTree = "<group>"; };
 		5E50A74127F704FD0065A643 /* iClef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iClef.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,6 +258,7 @@
 				5EE18F1628186446003C590D /* note D5#.mp3 */,
 				5EE18F6928186F13003C590D /* note E5b.mp3 */,
 				5EE18F0A28186446003C590D /* note E2.mp3 */,
+				5E084B9C2819579B007495FF /* note E2b.mp3 */,
 				5EE18EF028186445003C590D /* note E3.mp3 */,
 				5EE18F0328186446003C590D /* note E4.mp3 */,
 				5EE18EF528186445003C590D /* note E5.mp3 */,
@@ -402,6 +405,7 @@
 				5EE18F1A28186447003C590D /* note A4#.mp3 in Resources */,
 				5EE18F2028186447003C590D /* note E5.mp3 in Resources */,
 				5EE18F3D28186447003C590D /* note C4#.mp3 in Resources */,
+				5E084B9D2819579B007495FF /* note E2b.mp3 in Resources */,
 				5EE18F7628186FC6003C590D /* note A3b.mp3 in Resources */,
 				5EE18F6028186E92003C590D /* note D3b.mp3 in Resources */,
 				5EE18F2328186447003C590D /* note F4.mp3 in Resources */,

@@ -17,9 +17,9 @@ struct GameView: View {
     private let MAX_ERRORS = 3
     private let ANIMATION_TIME = 150
     
-    @State var randomNote : String = "A4"
-    @State var accidental : Accidental = .natural
-    @State var randomClef : ClefName = .treble
+    @State var randomNote : String = "E2"
+    @State var accidental : Accidental = .flat
+    @State var randomClef : ClefName = .bass
     @State var notePressed : String = "none"
     @State var score =  0
     @State var errors = 0
