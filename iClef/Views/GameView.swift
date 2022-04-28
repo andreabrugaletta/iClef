@@ -17,6 +17,7 @@ struct GameView: View {
     private let MAX_ERRORS = 3
     private let ANIMATION_TIME = 150
     
+    @State var level : Int?
     @State var randomNote : String = "E2"
     @State var accidental : Accidental = .flat
     @State var randomClef : ClefName = .bass
@@ -45,13 +46,11 @@ struct GameView: View {
     }
     
     private func startGame(_ note : Note, _ clef : Clef) {
-        print("start game")
         pickRandomClefAndNote(note, clef)
     }
     
     private func pickRandomClefAndNote(_ note: Note, _ clef : Clef) {
-        randomClef = clef.getRandomLvl2Clef()
-        print(randomClef)
+        randomClef = clef.getRandomClefByLevel(level ?? 1)
         randomNote = note.getRandomNote(in: randomClef)
         accidental = note.getRandomAccidental()
     }
@@ -123,7 +122,18 @@ struct GameView: View {
         
     private func checkCorrectAnswer(notePressed : String, note : Note, clef: Clef) {
         
-        if notePressed.contains(randomNote.first!) {
+        var noteName = String(randomNote[0])
+        
+        switch accidental {
+            case .natural:
+                break
+            case .flat:
+                noteName = noteName + "b"
+            case .sharp:
+                noteName = noteName + "#"
+        }
+        
+        if notePressed.contains(noteName) {
             //correct
             score += 1
             let fileName = createCorrectNoteFileName(randomNote)
@@ -199,7 +209,7 @@ struct GameView: View {
                                    height: geometry.size.height / note.height,
                                    alignment: .center)
                             .offset(x: geometry.size.width / note.xOffset,
-                                y: geometry.size.height / note.yOffset)
+                                    y: geometry.size.height / note.yOffset)
                         // dash (for dashed notes)
                         if note.yOffset == 0.924 {
                             Rectangle()
@@ -215,21 +225,30 @@ struct GameView: View {
                         }
                     }
                 }
-            .frame(width: 350, height: 130, alignment: .leading)
-            .onAppear {
-                startGame(note, clef)
-            }
-            .onReceive(timer) { _ in
-                if !isGameOver {
-                    didTimerExpired(note: note, clef: clef)
+                .frame(width: 350, height: 130, alignment: .leading)
+                .onAppear {
+                    startGame(note, clef)
                 }
-            }
-                        
-            ProgressBar(progressWidth: $progressBarWidth,
-                        progressBarBackgroundColor: $noteColor)
+                .onReceive(timer) { _ in
+                    if !isGameOver {
+                        didTimerExpired(note: note, clef: clef)
+                    }
+                }
+            
+            ProgressBar(progressWidth: $progressBarWidth)
                 .padding()
                 .padding(.top, 20)
-                       
+            
+            /* TEMPORARY note name Text */
+            switch accidental {
+                case .natural:
+                    Text("NOTE: \(String(randomNote[0]))")
+                case .flat:
+                    Text("NOTE: \(String(randomNote[0]))b")
+                case .sharp:
+                    Text("NOTE: \(String(randomNote[0]))#")
+            }
+            
             KeyView(notePressed: $notePressed)
                 .padding()
                 .onChange(of: self.notePressed) { notePressed in
@@ -251,7 +270,7 @@ struct GameView: View {
             }
             
         }
-        .padding(.top, 44)
+        .padding(.top, -24)
     }
 }
 

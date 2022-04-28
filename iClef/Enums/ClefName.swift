@@ -10,9 +10,9 @@ import Foundation
 enum ClefName : CaseIterable {
     case treble
     case bass
-    case baritone
-    case tenor
     case alto
-    case mezzoSoprano
+    case tenor
     case soprano
+    case mezzoSoprano
+    case baritone
 }
