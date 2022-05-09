@@ -18,9 +18,9 @@ struct GameView: View {
     private let ANIMATION_TIME = 150
     
     @State var level : Int?
-    @State var randomNote : String = "E2"
-    @State var accidental : Accidental = .flat
-    @State var randomClef : ClefName = .bass
+    @State var randomNote : String = "C4"
+    @State var accidental : Accidental = .natural
+    @State var randomClef : ClefName = .treble
     @State var notePressed : String = "none"
     @State var score =  0
     @State var errors = 0
@@ -52,9 +52,22 @@ struct GameView: View {
     private func pickRandomClefAndNote(_ note: Note, _ clef : Clef) {
         randomClef = clef.getRandomClefByLevel(level ?? 1)
         randomNote = note.getRandomNote(in: randomClef)
-        accidental = note.getRandomAccidental()
+//        accidental = note.getRandomAccidental()
     }
     
+    private func pickRandomClefAndNote(in interval: Int, _ note: Note, _ clef : Clef) {
+        let newClef = clef.getRandomClefByLevel(level ?? 1)
+        
+        if (randomClef == newClef) {
+            randomClef = newClef
+            randomNote = note.getRandomNoteInInterval(interval, randomNote, in: randomClef, withChangeInClef: false)
+        } else {
+            randomClef = newClef
+            randomNote = note.getRandomNoteInInterval(interval, randomNote, in: randomClef, withChangeInClef: true)
+        }
+//        accidental = note.getRandomAccidental()
+    }
+        
     private func restartTimer() {
         secondsPassed = 0
         hasPlayerAnswered = false
@@ -75,7 +88,7 @@ struct GameView: View {
         if toSec == Int(1.0 / SUB) {
             secondsPassed += 1
             toSec = 0
-            print(secondsPassed)
+//            print(secondsPassed)
         }
         
         if (secondsPassed >= GAME_TIME) {
@@ -83,7 +96,7 @@ struct GameView: View {
             colorChange(wrongAnswer: true)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(ANIMATION_TIME)) {
-                pickRandomClefAndNote(note, clef)
+                pickRandomClefAndNote(in: 2, note, clef)
             }
             
             errors += 1
@@ -116,7 +129,7 @@ struct GameView: View {
                     fileName = "note " + noteName + "#"
                 }
         }
-        print("NOTE NAME: \(fileName)")
+//        print("NOTE NAME: \(fileName)")
         return fileName
     }
         
@@ -150,7 +163,7 @@ struct GameView: View {
         secondsPassed = 1
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(ANIMATION_TIME)) {
-            pickRandomClefAndNote(note, clef)
+            pickRandomClefAndNote(in: 2, note, clef)
         }
     }
     
@@ -252,7 +265,7 @@ struct GameView: View {
             KeyView(notePressed: $notePressed)
                 .padding()
                 .onChange(of: self.notePressed) { notePressed in
-                    print(notePressed)
+//                    print(notePressed)
                     checkCorrectAnswer(notePressed: notePressed, note: note, clef: clef)
                 }
             
@@ -275,7 +288,7 @@ struct GameView: View {
 }
 
 private func playSound(_ resource : String) {
-    print("RESOURCE: \(resource)")
+//    print("RESOURCE: \(resource)")
     if let url = Bundle.main.url(forResource: resource, withExtension: "mp3") {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
