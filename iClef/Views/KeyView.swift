@@ -11,10 +11,11 @@ import AudioKitUI
 
 struct KeyView: View {
     @Binding var notePressed : String
+    @Binding var keyOnColor : Color
     
     var body: some View {
         VStack {
-            Keyboard(notePressed: $notePressed)
+            Keyboard(notePressed: $notePressed, keyOnColor: $keyOnColor)
         }
 
     }
@@ -22,6 +23,6 @@ struct KeyView: View {
 
 struct KeyView_Previews: PreviewProvider {
     static var previews: some View {
-        KeyView(notePressed: .constant("none"))
+        KeyView(notePressed: .constant("none"), keyOnColor: .constant(.white))
     }
 }

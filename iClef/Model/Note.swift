@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 var lastIndex = 0
+var lastClef : ClefName? = nil
 
 struct Note {
     var clef : ClefName
@@ -54,70 +55,114 @@ struct Note {
         }
     }
     
+    //called as soon as the game starts or for generic compound intervals
     func getRandomNote(in clefName: ClefName) -> String {
-        let index = Int.random(in: 0..<getOffsetsByClef(clefName).count) //random number in range [0, 12]
-        return Array(getOffsetsByClef(clefName).keys)[index]
+        print("getRandomInterval called")
+        let notesArray = getOrderedNotes(Array(getOffsetsByClef(clefName).keys))
+        let index = Int.random(in: 0..<notesArray.count) //random number in range [0, 12]
+        lastIndex = index //saves the index of the very first note in a global variable
+        return notesArray[index]
     }
     
-    func getRandomNoteInInterval(_ interval : Int, _ noteName : String, in clefName: ClefName, withChangeInClef isClefChanged : Bool) -> String {
-        if interval == 2 {
-            var noteArray = Array(getOffsetsByClef(clefName).keys)
-            
-            noteArray = noteArray.sorted {
-                let first = String($0.reversed())
-                let second = String($1.reversed())
-                
-                if (first[0] == second[0]) {
-                    
-                    if (first[1] == "A" && second[1] != "B") {
-                        return false
-                    }
-                    if (first[1] == "B" && second[1] != "A") {
-                        return false
-                    }
-                    if (first[1] != "B" && second[1] == "A") {
-                        return true
-                    }
-                    if (first[1] != "A" && second[1] == "B") {
-                        return true
-                    } else {
-                        return first < second
-                    }
-                }
-                
-                return first < second
-                
-            }
-            print("noteArray: \(noteArray)")
-            
+    //called after the very first note is already choosen
+    func getRandomNotesInterval(_ interval : Interval?, _ noteName : String, in clefName: ClefName) -> String {
+        
+        if let interval = interval {
+            var notesArray = Array(getOffsetsByClef(clefName).keys)
+            notesArray = getOrderedNotes(notesArray)
+
             var index = 0
             
-            if (isClefChanged) {
-                index = lastIndex
+            if (lastClef == clefName) {
+                index = Int(notesArray.firstIndex(of: noteName) ?? lastIndex)
             } else {
-                index = Int(noteArray.firstIndex(of: noteName) ?? lastIndex)
+                index = lastIndex
             }
+            
+            var offset = Int.random(in: 0...interval.rawValue)
 
-            print("index: \(index)")
             
-            switch index {
-                case 0:
-                    index += 1
-                case 12:
-                    index -= 1
-                default:
-                    index = index + Int.random(in: -interval+1..<interval)
+            if index + offset > 12 && index - offset < 0 {
+                offset /= 2
             }
-            print("new index: \(index)")
-            lastIndex = index
             
-            return noteArray[index]
+            if index + offset > 12 {
+                index = index - offset
+            } else if index - offset < 0 {
+                index = index + offset
+            } else {
+                let sign = Int.random(in: 0...1) == 0 ? -1 : 1
+                index = index + (sign * offset)
+            }
+            
+            lastIndex = index
+            lastClef = clefName
+            
+            return notesArray[index]
+        } else {
+            return getRandomNote(in: clefName)
         }
-        return ""
+    
+
     }
     
     func getRandomAccidental() -> Accidental {
         return Accidental.allCases.randomElement() ?? .natural
+    }
+    
+    private func getOrderedNotes(_ notes : [String]) -> [String] {
+        let notesArray = notes.sorted {
+            let first = String($0.reversed())
+            let second = String($1.reversed())
+            
+            if (first[0] == second[0]) {
+                
+                if (first[1] == "A" && second[1] != "B") {
+                    return false
+                }
+                if (first[1] == "B" && second[1] != "A") {
+                    return false
+                }
+                if (first[1] != "B" && second[1] == "A") {
+                    return true
+                }
+                if (first[1] != "A" && second[1] == "B") {
+                    return true
+                } else {
+                    return first < second
+                }
+            }
+            
+            return first < second
+            
+        }
+        return notesArray
+    }
+    
+    // OPTIMIZATION?: generate the probArray only when needed
+    func generateRandomAccidentalFor(_ step: Int, note noteName: String) -> Accidental {
+        
+        var probArray : [Int] = []
+        
+        if step == 4 {
+            print("step = \(step)")
+            probArray += Array(repeating: 1, count: 3)
+            probArray += Array(repeating: 2, count: 3)
+            probArray += Array(repeating: 3, count: 1)
+            probArray += Array(repeating: 4, count: 1)
+            probArray += Array(repeating: 0, count: 2)
+        } else {
+            
+            if !noteName.contains("F") && !noteName.contains("C") {
+                probArray += Array(repeating: 1, count: step)
+            }
+            if !noteName.contains("E") && !noteName.contains("B") {
+                probArray += Array(repeating: 2, count: step)
+            }
+            probArray += Array(repeating: 0, count: 10-probArray.count)
+        }
+        
+        return Accidental(rawValue: probArray.randomElement()!)!
     }
         
 }

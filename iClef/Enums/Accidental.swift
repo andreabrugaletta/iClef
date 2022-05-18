@@ -7,8 +7,10 @@
 
 import Foundation
 
-enum Accidental : CaseIterable {
-    case natural
+enum Accidental : Int, CaseIterable {
+    case natural = 0
     case flat
     case sharp
+    case doubleFlat
+    case doubleSharp
 }

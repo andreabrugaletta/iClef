@@ -13,12 +13,12 @@ struct ProgressBar: View {
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 25, style: .continuous)
-                .fill(Color.white)
+                .fill(Color("cream"))
                 .frame(width: 300, height: 5)
             RoundedRectangle(cornerRadius: 25, style: .continuous)
-                .fill(Color.black)
-                .opacity(0.6)
-                .frame(width: progressWidth, height: 5)
+                .fill(Color("customBlack"))
+//                .opacity(0.6)
+                .frame(width: progressWidth, height: 4)
         }
     }
 }

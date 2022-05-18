@@ -63,7 +63,18 @@ struct Clef {
     }
     
     func getRandomClefByLevel(_ level : Int) -> ClefName {
-        return ClefName.allCases[0...level-1].randomElement() ?? .treble
+        switch level {
+            case 1:
+                return .treble
+            case 2:
+                return ClefName.allCases[0...1].randomElement() ?? .treble
+            case 3:
+                return ClefName.allCases[0...3].randomElement() ?? .treble
+            case 4:
+                return ClefName.allCases.randomElement() ?? .treble
+            default:
+                return .treble
+        }
     }
     
 }

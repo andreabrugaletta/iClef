@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+enum Interval: Int, CaseIterable {
+    case unison = 0
+    case second
+    case third
+    case fourth
+    case fifth
+    case sixth
+    case seventh
+    case octave
+    case compound
+}

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5E084B9D2819579B007495FF /* note E2b.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E084B9C2819579B007495FF /* note E2b.mp3 */; };
+		5E0F344F282FF59900930ECD /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0F344E282FF59900930ECD /* GameOverView.swift */; };
+		5E3E858E28313BD000C71D7C /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3E858D28313BD000C71D7C /* UserSettings.swift */; };
 		5E3EA07E27F843C900DF0E47 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3EA07D27F843C900DF0E47 /* GameView.swift */; };
 		5E49903A2806FA3F00D13C2C /* KeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4990392806FA3F00D13C2C /* KeyView.swift */; };
 		5E49903D2806FA9C00D13C2C /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5E49903C2806FA9C00D13C2C /* AudioKit */; };
@@ -91,6 +93,8 @@
 
 /* Begin PBXFileReference section */
 		5E084B9C2819579B007495FF /* note E2b.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "note E2b.mp3"; path = "sounds/note E2b.mp3"; sourceTree = SOURCE_ROOT; };
+		5E0F344E282FF59900930ECD /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		5E3E858D28313BD000C71D7C /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		5E3EA07D27F843C900DF0E47 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		5E4990392806FA3F00D13C2C /* KeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyView.swift; sourceTree = "<group>"; };
 		5E50A74127F704FD0065A643 /* iClef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iClef.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +196,7 @@
 				5E4990392806FA3F00D13C2C /* KeyView.swift */,
 				5E9F316728100E32006370C2 /* ProgressBar.swift */,
 				5EAC3F4F281ACA7300A372EF /* LevelsView.swift */,
+				5E0F344E282FF59900930ECD /* GameOverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -302,6 +307,7 @@
 			children = (
 				5EAB726F2809C0D10014AEA9 /* Keyboard.swift */,
 				5E70A99328104911009C6724 /* Extensions.swift */,
+				5E3E858D28313BD000C71D7C /* UserSettings.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -466,6 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E0F344F282FF59900930ECD /* GameOverView.swift in Sources */,
 				5EE9BBA727FF287B004CECF3 /* Note.swift in Sources */,
 				5EAC3F50281ACA7300A372EF /* LevelsView.swift in Sources */,
 				5E50A74727F704FD0065A643 /* ContentView.swift in Sources */,
@@ -478,6 +485,7 @@
 				5EB6258F27FD8A4700600EB9 /* Clef.swift in Sources */,
 				5E9F316828100E32006370C2 /* ProgressBar.swift in Sources */,
 				5E70A99428104911009C6724 /* Extensions.swift in Sources */,
+				5E3E858E28313BD000C71D7C /* UserSettings.swift in Sources */,
 				5EEF0E86280EFE2F00DABC42 /* Accidental.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -618,6 +626,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -648,6 +657,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
