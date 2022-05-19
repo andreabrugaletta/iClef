@@ -12,6 +12,7 @@ struct GameOverView: View {
     @State var animatedScore : Int = 0
     @Binding var isGameOver : Bool
     @ObservedObject var userSettings = UserSettings()
+    @State var bestScore = UserSettings().highestScore
     
     var body: some View {
         NavigationView {
@@ -29,8 +30,9 @@ struct GameOverView: View {
                         .modifier(AnimatingNumberOverlay(number: CGFloat(animatedScore)))
                         .onAppear {
                             withAnimation(Animation.easeIn(duration: 1.0)) {
-                                animatedScore = self.score
+                                animatedScore = score
                             }
+                            
                         }
                         
                     Text("Best score")
@@ -41,8 +43,17 @@ struct GameOverView: View {
                             .fill(Color(.systemGray6))
                             .frame(width: 200, height: 44, alignment: .center)
                             .cornerRadius(25)
-                        Text(String(userSettings.highestScore))
-                            .font(.system(size: 24))
+                            .modifier(AnimatingNumberOverlay(number: CGFloat(bestScore)))
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                                    if score > userSettings.highestScore {
+                                        userSettings.highestScore = score
+                                        withAnimation(Animation.easeIn(duration: 1.0)) {
+                                            bestScore = score
+                                        }
+                                    }
+                                }
+                            }
                     }
                     .padding(.bottom, 180)
                     Button {

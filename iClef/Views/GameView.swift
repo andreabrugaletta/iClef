@@ -329,9 +329,9 @@ struct GameView: View {
                 keyOnColor = .white
             }
 
-            if score > userSettings.highestScore {
-                userSettings.highestScore = score
-            }
+//            if score > userSettings.highestScore {
+//                userSettings.highestScore = score
+//            }
             isGameOver = true
         }
     }
