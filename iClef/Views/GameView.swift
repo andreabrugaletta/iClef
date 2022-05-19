@@ -44,7 +44,7 @@ struct GameView: View {
     @State var timePassedDecrement : Double = -0.8
 
     let gameplayTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    let stepsTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+//    let stepsTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     let progressBarTimer = Timer.publish(every: 0.001, on: .main, in: .common).autoconnect()
     
     private func goToLevelsView() {
@@ -427,7 +427,7 @@ struct GameView: View {
                         startGame(note, clef)
                     }
                     .onDisappear {
-                        stepsTimer.upstream.connect().cancel()
+//                        stepsTimer.upstream.connect().cancel()
                         gameplayTimer.upstream.connect().cancel()
                         progressBarTimer.upstream.connect().cancel()
                     }
@@ -435,11 +435,9 @@ struct GameView: View {
                         if !isGameOver {
                             didTimerExpired(timerDate: timerDate, note: note, clef: clef)
                         }
-                    }
-                    .onReceive(stepsTimer) { currentDate in
+                        
                         if let playingTime = playingTime {
-                            
-                            let distance = playingTime.distance(to: currentDate)
+                            let distance = playingTime.distance(to: timerDate)
                             
                             if distance >= stepTime && timeToAnswer > 1.0 {
                                 
@@ -467,13 +465,46 @@ struct GameView: View {
                             
                         }
                     }
+                /*
+                    .onReceive(stepsTimer) { currentDate in
+                        if let playingTime = playingTime {
+
+                            let distance = playingTime.distance(to: currentDate)
+
+                            if distance >= stepTime && timeToAnswer > 1.0 {
+
+                                if (currentStep < 4) {
+                                    currentStep += 1
+                                }
+
+                                switch timeToAnswer {
+                                    case 2.0:
+                                        timeToAnswer -= 1.0
+                                        stepTime = 60.0
+                                    case 3.0...4.0:
+                                        timeToAnswer -= 1.0
+                                        stepTime = 50.0
+                                    default:
+                                        timeToAnswer -= 2.0
+                                        stepTime = 45.0
+                                }
+
+                                self.playingTime = Date()
+                                if interval < 8 {
+                                    interval += 1
+                                }
+                            }
+
+                        }
+                    }
+                 */
                     .fullScreenCover(isPresented: $isGameOver) {
                         restartGame(note, clef)
                     } content: {
                         GameOverView(score: score, isGameOver: $isGameOver)
                     }
                     .padding(.top, 24)
-                                
+                
                 VStack(spacing: 24) {
                     ProgressBar(progressWidth: $progressBarWidth)
                         .onReceive(progressBarTimer) { _ in
@@ -510,7 +541,7 @@ struct GameView: View {
                 HStack {
                     ForEach((0..<errors), id: \.self) { _ in
                         Circle()
-                            .fill(Color(red: 184/255, green: 15/255, blue: 23/255))
+                            .fill(.red)
                             .frame(width: 8, height: 8)
                     }
                 }
