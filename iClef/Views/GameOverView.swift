@@ -41,11 +41,11 @@ struct GameOverView: View {
                     ZStack {
                         Rectangle()
                             .fill(Color(.systemGray6))
-                            .frame(width: 200, height: 44, alignment: .center)
+                            .frame(width: 180, height: 44, alignment: .center)
                             .cornerRadius(25)
                             .modifier(AnimatingNumberOverlay(number: CGFloat(bestScore)))
                             .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(850)) {
                                     if score > userSettings.highestScore {
                                         userSettings.highestScore = score
                                         withAnimation(Animation.easeIn(duration: 1.0)) {
